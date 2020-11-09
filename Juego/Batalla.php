@@ -35,11 +35,11 @@ class Batalla
 
         if ($puntos_ejercito_atacante > $puntos_ejercito_atacado) {
             //Ejercito atacante ganador
-            $this->ejercito_atacante->set_monedas_oro($this->ejercito_atacante->get_monedas_oro() + self::CANTIDAD_MONEDAS_ORO_GANADAS_POR_BATALLA); //Aumento monedas ejercito atacante
+            $this->ejercito_atacante->agregar_monedas_oro(self::CANTIDAD_MONEDAS_ORO_GANADAS_POR_BATALLA); //Aumento monedas ejercito atacante
             $this->ejercito_atacado->eliminar_top_unidades(self::CANTIDAD_UNIDADES_PERDIDAS_POR_BATALLA);
         } else if ($puntos_ejercito_atacante < $puntos_ejercito_atacado) {
             //Ejercito atacado ganador
-            $this->ejercito_atacado->set_monedas_oro($this->ejercito_atacado->get_monedas_oro() + self::CANTIDAD_MONEDAS_ORO_GANADAS_POR_BATALLA); //Aumento monedas ejercito atacado
+            $this->ejercito_atacado->agregar_monedas_oro(self::CANTIDAD_MONEDAS_ORO_GANADAS_POR_BATALLA); //Aumento monedas ejercito atacado
             $this->ejercito_atacante->eliminar_top_unidades(self::CANTIDAD_UNIDADES_PERDIDAS_POR_BATALLA);
         } else {
             //empate

@@ -118,4 +118,13 @@ class Ejercito
     {
         return $this->batallas;
     }
+
+    /**
+     * Agrega monedas de oro al ejército
+     * @param int monedas_oro
+     */
+    public function agregar_monedas_oro(int $monedas_oro)
+    {
+        $this->monedas_oro += $monedas_oro;
+    }
 }
