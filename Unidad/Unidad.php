@@ -9,7 +9,7 @@ class Unidad
     private int $fuerza;
     private bool $esta_entrenado;
 
-    public function __construct(TipoUnidad $tipo_unidad, Ejercito $ejercito)
+    public function __construct(TipoUnidad $tipo_unidad, Ejercito &$ejercito)
     {
         $this->tipo_unidad = $tipo_unidad;
         $this->ejercito = $ejercito;
