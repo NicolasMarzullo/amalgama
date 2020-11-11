@@ -14,6 +14,6 @@ class Caballero extends Unidad
     public function entrenar()
     {
         if (!$this->entrenar_unidad(self::COSTO_ENTRENAMIENTO, self::AUMENTO_FUERZA_ENTRENAMIENTO))
-            throw new Exception("No se pudo entrenar al caballero :( ", 5);
+            throw new Exception("No hay oro suficiente para entrenar la unidad :( ", 5);
     }
 }
