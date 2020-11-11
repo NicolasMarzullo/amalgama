@@ -6,7 +6,6 @@ class Unidad
 
     private TipoUnidad $tipo_unidad;
     private Ejercito $ejercito;
-    private int $fuerza;
     private bool $esta_entrenado;
 
     public function __construct(TipoUnidad $tipo_unidad, Ejercito &$ejercito)
