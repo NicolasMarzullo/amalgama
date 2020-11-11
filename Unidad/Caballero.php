@@ -1,47 +1,19 @@
 <?php
 
-//Concrete strategy Caballero
-class Caballero implements TipoUnidad
+class Caballero extends Unidad
 {
-    private int $fuerza;
     private const FUERZA_INICIAL = 20;
     private const COSTO_ENTRENAMIENTO = 30;
     private const AUMENTO_FUERZA_ENTRENAMIENTO = 10;
 
-    function __construct()
+    function __construct(Ejercito &$ejercito)
     {
-        $this->fuerza = self::FUERZA_INICIAL;
-    }
-
-    function get_fuerza()
-    {
-        return $this->fuerza;
-    }
-
-    function set_fuerza(int $fuerza)
-    {
-        $this->fuerza = $fuerza;
-    }
-
-    public function transformar()
-    {
-        throw new Exception("El caballero no puede transformarse");
+        parent::__construct($ejercito, self::FUERZA_INICIAL);
     }
 
     public function entrenar()
     {
-        //Considero que puede entrenar solo una vez.
-
-        $this->fuerza += self::AUMENTO_FUERZA_ENTRENAMIENTO;
-    }
-
-    public function get_costo_entrenamiento()
-    {
-        return self::COSTO_ENTRENAMIENTO;
-    }
-
-    public function get_costo_transformacion()
-    {
-        return 0;
+        if (!$this->entrenar_unidad(self::COSTO_ENTRENAMIENTO, self::AUMENTO_FUERZA_ENTRENAMIENTO))
+            throw new Exception("No se pudo entrenar al caballero :( ", 5);
     }
 }

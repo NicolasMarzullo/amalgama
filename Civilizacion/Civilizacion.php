@@ -1,5 +1,4 @@
 <?php
-
 abstract class Civilizacion // Abstracta, no deseo instanciar esta clase, las instanciables son las concretas, ejemplo: CivilizacionIngles
 {
     private int $cantidad_piqueros;

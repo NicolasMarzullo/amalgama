@@ -1,7 +1,5 @@
 <?php
-
-//Concrete strategy Piquero
-class Piquero implements TipoUnidad
+class Piquero extends Unidad
 {
 
     private const FUERZA_INICIAL = 5;
@@ -9,39 +7,22 @@ class Piquero implements TipoUnidad
     private const AUMENTO_FUERZA_ENTRENAMIENTO = 3;
     private const COSTO_TRANSFORMACION = 30;
 
-    function __construct()
+    function __construct(Ejercito &$ejercito)
     {
-        $this->fuerza = self::FUERZA_INICIAL;
-    }
-
-    function get_fuerza()
-    {
-        return $this->fuerza;
-    }
-
-    function set_fuerza(int $fuerza)
-    {
-        $this->fuerza = $fuerza;
+        parent::__construct($ejercito, self::FUERZA_INICIAL);
     }
 
     public function transformar()
     {
-        //Cuando se transforma considero que arranca con la fuerza inicial de un Arquero
-        return new Arquero();
+        if ($this->validar_transformacion(self::COSTO_TRANSFORMACION))
+            return new Arquero($this->ejercito); //Cuando se transforma considero que arranca con la fuerza inicial de un Arquero
+        else
+            throw new Exception("No se pudo transformar al piquero :( ", 1);
     }
 
     public function entrenar()
     {
-        $this->fuerza += self::AUMENTO_FUERZA_ENTRENAMIENTO;
-    }
-
-    public function get_costo_entrenamiento()
-    {
-        return self::COSTO_ENTRENAMIENTO;
-    }
-
-    public function get_costo_transformacion()
-    {
-        return self::COSTO_TRANSFORMACION;
+        if (!$this->entrenar_unidad(self::COSTO_ENTRENAMIENTO, self::AUMENTO_FUERZA_ENTRENAMIENTO))
+            throw new Exception("No se pudo entrenar al piquero :( ", 2);
     }
 }

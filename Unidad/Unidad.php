@@ -1,47 +1,53 @@
 <?php
-
-//Class context (Pattern Strategy)
 class Unidad
 {
-
-    private TipoUnidad $tipo_unidad;
-    private Ejercito $ejercito;
-    private int $fuerza;
+    protected Ejercito $ejercito;
     private bool $esta_entrenado;
+    private int $fuerza;
 
-    public function __construct(TipoUnidad $tipo_unidad, Ejercito &$ejercito)
+
+    public function __construct(Ejercito &$ejercito, int $fuerza)
     {
-        $this->tipo_unidad = $tipo_unidad;
         $this->ejercito = $ejercito;
+        $this->fuerza = $fuerza;
         $this->esta_entrenado = false;
     }
 
-    public function transformar()
+    /**
+     * Entrena a la unidad (aumenta su fuerza) y marca a la unidad como entrenada
+     * 
+     * 
+     * @param int $costo_entrenamiento costo en monedas de oro entrenar la unidad
+     * @param int $aumento_fuerza cantidad de fuerza que se le debe aumentar a la unidad
+     * @return boolean true si se puedo entrenar false si no se pudo
+     */
+    protected function entrenar_unidad(int $costo_entrenamiento, int $aumento_fuerza)
     {
-        if ($this->ejercito->get_monedas_oro() >= $this->tipo_unidad->get_costo_transformacion()) {
-            $this->tipo_unidad = $this->tipo_unidad->transformar();
-        }
-    }
-
-    public function entrenar()
-    {
-        if ($this->tipo_unidad->get_costo_entrenamiento() >= $this->ejercito->get_monedas_oro() && !$this->esta_entrenado) {
-            $this->ejercito->set_monedas_oro($this->ejercito->get_monedas_oro() - $this->tipo_unidad->get_costo_entrenamiento());
+        //Valido que haya suficientes monedas de oro para entrenar
+        if ($costo_entrenamiento >= $this->ejercito->get_monedas_oro() && !$this->esta_entrenado) { // Considero que se puede entrenar una sola vez.
+            $this->ejercito->descontar_monedas_oro($costo_entrenamiento);
             $this->esta_entrenado = true;
+            $this->fuerza += $aumento_fuerza;
         } else
             return false;
 
-        $this->tipo_unidad->entrenar();
         return true;
     }
 
     /**
+     * Valida si hay suficientes monedas en el ejército para hacer la transformacion. Si las hay las descuenta.
      * 
-     * @return TipoUnidad
+     * @param int $costo_transformacion costo de transformar la unidad
+     * @return boolean true si se puede transformar, false si no se puede
      */
-    public function get_tipo_unidad()
+    protected function validar_transformacion(int $costo_transformacion)
     {
-        return $this->tipo_unidad;
+        if ($costo_transformacion >= $this->ejercito->get_monedas_oro()) {
+            $this->ejercito->descontar_monedas_oro($costo_transformacion);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -50,5 +56,15 @@ class Unidad
     public function esta_entrenado()
     {
         return $this->esta_entrenado;
+    }
+
+    function get_fuerza()
+    {
+        return $this->fuerza;
+    }
+
+    function set_fuerza(int $fuerza)
+    {
+        $this->fuerza = $fuerza;
     }
 }

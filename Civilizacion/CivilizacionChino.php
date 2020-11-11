@@ -1,5 +1,4 @@
 <?php
-
 class CivilizacionChinos extends Civilizacion
 {
     const CANT_INICIAL_PIQUEROS = 2;

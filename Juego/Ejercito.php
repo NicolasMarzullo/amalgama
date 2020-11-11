@@ -12,15 +12,15 @@ class Ejercito
         $this->monedas_oro = self::MONEDAS_ORO_INICIAL;
 
         for ($i = 0; $i < $civilizacion->get_cant_piqueros(); $i++) {
-            $this->unidades[] = new Unidad(new Piquero(), $this);
+            $this->unidades[] = new Piquero($this);
         }
 
         for ($i = 0; $i < $civilizacion->get_cant_arqueros(); $i++) {
-            $this->unidades[] = new Unidad(new Arquero(), $this);
+            $this->unidades[] = new Arquero($this);
         }
 
         for ($i = 0; $i < $civilizacion->get_cant_piqueros(); $i++) {
-            $this->unidades[] = new Unidad(new Caballero(), $this);
+            $this->unidades[] = new Caballero($this);
         }
 
         //Inicilizo el array de batallas
@@ -45,7 +45,7 @@ class Ejercito
     {
         $puntos_fuerza_total = 0;
         foreach ($this->unidades as $unidad) {
-            $puntos_fuerza_total += $unidad->get_tipo_unidad()->get_fuerza();
+            $puntos_fuerza_total += $unidad->get_fuerza();
         }
         return $puntos_fuerza_total;
     }
@@ -58,8 +58,8 @@ class Ejercito
     {
         usort($this->unidades, function (Unidad $unidad_1, Unidad $unidad_2) {
             //Algoritmo de comparacion para poder ordenar un array de Unidad
-            $fuerza_unidad_1 = $unidad_1->get_tipo_unidad()->get_fuerza();
-            $fuerza_unidad_2 = $unidad_2->get_tipo_unidad()->get_fuerza();
+            $fuerza_unidad_1 = $unidad_1->get_fuerza();
+            $fuerza_unidad_2 = $unidad_2->get_fuerza();
 
             if ($fuerza_unidad_1 == $fuerza_unidad_2)
                 return 0;
@@ -126,5 +126,14 @@ class Ejercito
     public function agregar_monedas_oro(int $monedas_oro)
     {
         $this->monedas_oro += $monedas_oro;
+    }
+
+    /**
+     * descuenta monedas de oro al ejército
+     * @param int monedas_oro
+     */
+    public function descontar_monedas_oro(int $monedas_oro)
+    {
+        $this->monedas_oro -= $monedas_oro;
     }
 }
